@@ -1,3 +1,4 @@
+
 import datetime
 import os
 
@@ -11,6 +12,7 @@ app.secret_key = os.environ['APP_SECRET_KEY']
 
 @app.route("/", methods=('GET', 'POST'))
 def add_item():
+
     form = ItemForm()
     if form.validate_on_submit():
         item = Items(name=form.name.data, quantity=form.quantity.data, description=form.description.data, date_added=datetime.datetime.now())
@@ -22,12 +24,9 @@ def add_item():
 @app.route("/success")
 def success():
     results = []
- 
     qry = db_session.query(Items)
     results = qry.all()
-
     return str(results)
-  
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+
+    app.run(host='0.0.0.0', port=5001, debug=True)
